@@ -9,29 +9,27 @@ use core::panic::PanicInfo;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    println!("Hello World{}", "!");
+	println!("Hello World{}", "!");
 
-    blog_os::init();
+	blog_os::init();
 
-    x86_64::instructions::interrupts::int3();
+	#[cfg(test)]
+	test_main();
 
-    #[cfg(test)]
-    test_main();
+	println!("No crash");
 
-    println!("No crash");
-
-    loop {}
+	loop {}
 }
 
 #[cfg(not(test))]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    println!("{}", info);
-    loop {}
+	println!("{}", info);
+	loop {}
 }
 
 #[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    blog_os::test_panic_handler(info)
+	blog_os::test_panic_handler(info)
 }

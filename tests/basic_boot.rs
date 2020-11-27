@@ -8,19 +8,19 @@ use core::panic::PanicInfo;
 
 #[no_mangle] // don't mangle the name of this function
 pub extern "C" fn _start() -> ! {
-    test_main();
+	test_main();
 
-    loop {}
+	loop {}
 }
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    blog_os::test_panic_handler(info)
+	blog_os::test_panic_handler(info)
 }
 
 use blog_os::println;
 
 #[test_case]
 fn test_println() {
-    println!("test_println output");
+	println!("test_println output");
 }
